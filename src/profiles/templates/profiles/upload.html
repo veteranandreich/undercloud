@@ -1,0 +1,6 @@
+<form action="{% url 'profiles:upload' %}" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="track" accept="audio/*">
+    <input type="text" name="title">
+    <input class="button small" type="submit" value="Upload"/>
+</form>

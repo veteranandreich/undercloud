@@ -6,7 +6,7 @@ SECRET_KEY = 'rw%)t7%^egx$-ugf244eo2z^lw*yj-9i&hvisf6e0(udfs_@qz'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.43.50']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -94,5 +94,5 @@ LOGIN_REDIRECT_URL = '/profile/feed'
 
 LOGOUT_REDIRECT_URL = '/accounts/login'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

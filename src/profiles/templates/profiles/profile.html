@@ -1,0 +1,19 @@
+<img src="{{ profile.photo.url }}" alt="">
+owner = {{ profile.owner }}
+status = {{ profile.status }}
+Followers:
+{% for follower in followers %}
+{{ follower }}
+{% endfor %}
+Following:
+{% for follower in following %}
+{{ follower }}
+{% endfor %}
+About me:
+{{ profile.about }}
+{{ profile.get_audio }}
+<audio src="{{ profile.get_audio }}"></audio>
+<audio>
+ <source src="{{ profile.get_audio }}">
+</audio>
+
