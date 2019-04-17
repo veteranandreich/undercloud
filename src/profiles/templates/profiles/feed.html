@@ -1,0 +1,10 @@
+{% for track in audio %}
+<p>
+    <p>Author: {{ track.owner }}</p>
+    <p>Published: {{ track.publication_date }}</p>
+    <audio controls preload="metadata">
+    <source src="{{ track.track.url }}" type="audio/mpeg">
+    Тег audio не поддерживается вашим браузером.
+  </audio>
+</p>
+{% endfor %}

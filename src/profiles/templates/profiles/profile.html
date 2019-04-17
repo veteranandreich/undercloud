@@ -11,9 +11,9 @@ Following:
 {% endfor %}
 About me:
 {{ profile.about }}
-{{ profile.get_audio }}
-<audio src="{{ profile.get_audio }}"></audio>
-<audio>
- <source src="{{ profile.get_audio }}">
-</audio>
-
+{% for track in audio %}
+<audio controls preload="metadata">
+    <source src="{{ track.track.url }}" type="audio/mpeg">
+    Тег audio не поддерживается вашим браузером.
+  </audio>
+{% endfor %}

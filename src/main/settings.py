@@ -1,4 +1,5 @@
 import os
+from . import config
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -6,7 +7,7 @@ SECRET_KEY = 'rw%)t7%^egx$-ugf244eo2z^lw*yj-9i&hvisf6e0(udfs_@qz'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.43.50']
+ALLOWED_HOSTS = ['192.168.43.50', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -16,8 +17,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'profiles.apps.ProfilesConfig',
     'accounts.apps.AccountsConfig',
+    'api'
 ]
 
 MIDDLEWARE = [
@@ -75,6 +78,22 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = config.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = config.EMAIL_HOST_PASSWORD
+EMAIL_PORT = 587
 
 LANGUAGE_CODE = 'en-us'
 
