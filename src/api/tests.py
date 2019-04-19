@@ -86,3 +86,34 @@ class AuthApiViewTest(TestCase):
         response = self.client.get("/api/profiles/"+str(self.user.pk))
         response = self.client.patch("/api/profiles/"+str(self.user.pk),{"status":"teststatus"})
         self.assertTrue(response.json()["status"]!="")
+
+class NegativeApiTest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        response = self.client.post('/api/register', {
+            "username": "pelevin",
+            "email": "test_user1@example.com",
+            "password": "secret"
+        }, format="json")
+
+        user = User.objects.last()
+        user.is_active = True
+        user.save()
+        profile = Profile(owner = user)
+        profile.save()
+        self.user = user
+
+        response = self.client.post('/api/jwt-auth/', {
+            "username":"pelevin",
+            "password": "secret"
+        })
+        token = response.json()["token"]
+        self.client.credentials(HTTP_AUTHORIZATION='JWT ' + token)
+
+    def test_reg_exist_user(self):
+        response = self.client.post('/api/register', {
+            "username": "pelevin",
+            "email": "test_user1@example.com",
+            "password": "secret"
+        }, format="json")
+        self.assertTrue(response.json()["username"][0]== 'user with this username already exists.')
