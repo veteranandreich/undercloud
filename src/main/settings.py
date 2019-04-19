@@ -1,7 +1,12 @@
 import os
 from . import config
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+def root(*dirs):
+    base_dir = os.path.join(os.path.dirname(__file__), '..', '..')
+    return os.path.abspath(os.path.join(base_dir, *dirs))
+
+
+BASE_DIR = root()
 
 SECRET_KEY = 'rw%)t7%^egx$-ugf244eo2z^lw*yj-9i&hvisf6e0(udfs_@qz'
 
@@ -59,10 +64,10 @@ WSGI_APPLICATION = 'main.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'undercloud_db',
-        'USER': 'db_user',
+        'NAME': 'postgres',
+        'USER': 'postgres',
         'PASSWORD': '1234',
-        'HOST': '127.0.0.1',
+        'HOST': 'db',
         'PORT': 5432
     }
 }
@@ -109,6 +114,7 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/static'
 
 AUTH_USER_MODEL = 'accounts.User'
 

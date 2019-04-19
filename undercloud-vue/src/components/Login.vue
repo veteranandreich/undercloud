@@ -3,6 +3,11 @@
         <input v-model="login" type="text" placeholder="Login"/>
         <input v-model="password" type="password" placeholder="Password"/>
         <button @click="SignIn"> Sign In </button>
+        <router-link :to="{name: 'Register'}">
+            New here?
+        </router-link>
+        <hr>
+        {{errormessage}}
     </div>
 </template>
 
@@ -16,6 +21,7 @@
             return {
                 login: '',
                 password: '',
+                errormessage: ''
             }
         },
         methods: {
@@ -33,10 +39,16 @@
                         password: this.password
                     },
                     success: (response) => {
-                        console.log(response)
+                        this.errormessage = "";
+                        console.log(response);
+                        localStorage.setItem("access_token", response.access)
+                        localStorage.setItem("refresh_token", response.refresh)
+                        this.$router.push("Feed")
+
                     },
                     error: (response) => {
-                        console.log(response)
+                        console.log(response);
+                        this.errormessage = "Incorrect login or password"
                     }
                 })
             }
