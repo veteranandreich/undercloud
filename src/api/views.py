@@ -2,16 +2,14 @@ from rest_framework import viewsets
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
-from profiles.models import Profile
-from .serializers import ProfileSerializer, CreateUserSerializer
-from .permissions import IsActive
+from profiles.models import Profile, Audio
+from .serializers import ProfileSerializer, CreateUserSerializer, AudioSerializer
 from accounts.models import User
 from rest_framework import generics
 from rest_framework.permissions import AllowAny
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsActive]
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all()
 
@@ -57,3 +55,12 @@ class Verifier(APIView):
             user.is_active = True
         user.save()
         return Response({"Status": "Account verified"})
+
+# Rewrtie to viewset
+class UploadAudio(generics.CreateAPIView):
+    model = Audio
+    serializer_class = AudioSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user.profile)
+

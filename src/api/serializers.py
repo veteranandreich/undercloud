@@ -51,7 +51,7 @@ class FollowersSerializer(serializers.ModelSerializer):
 class AudioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Audio
-        fields = ('owner', 'title', 'track', 'publication_date')
+        fields = ('title', 'track', 'publication_date')
 
 
 class ProfileSerializer(serializers.ModelSerializer):
