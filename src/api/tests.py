@@ -57,6 +57,7 @@ class AuthApiViewTest(TestCase):
         user.save()
         profile = Profile(owner = user)
         profile.save()
+        self.user = user
 
         response = self.client.post('/api/jwt-auth/', {
             "username":"pelevin",
@@ -78,6 +79,10 @@ class AuthApiViewTest(TestCase):
         self.assertTrue(response.status_code == 200)
 
     def test_profilepk_api(self):
-        response = self.client.get("/api/profiles/11")
-        response.data
+        response = self.client.get("/api/profiles/"+str(self.user.pk))
         self.assertTrue(response.status_code==200)
+
+    def test_profile_patch_api(self):
+        response = self.client.get("/api/profiles/"+str(self.user.pk))
+        response = self.client.patch("/api/profiles/"+str(self.user.pk),{"status":"teststatus"})
+        self.assertTrue(response.json()["status"]!="")
