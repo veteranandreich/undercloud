@@ -41,7 +41,7 @@ class ApiViewTest(TestCase):
             "username":"pelevin",
             "password": "secret"
         })
-        self.assertTrue(response.json()["token"])
+        self.assertTrue(response.json()["access"])
 
 class AuthApiViewTest(TestCase):
     def setUp(self):
@@ -63,8 +63,8 @@ class AuthApiViewTest(TestCase):
             "username":"pelevin",
             "password": "secret"
         })
-        token = response.json()["token"]
-        self.client.credentials(HTTP_AUTHORIZATION='JWT ' + token)
+        token = response.json()["access"]
+        self.client.credentials(HTTP_AUTHORIZATION='Bearer ' + token)
 
     def test_profile_post_api(self):
         response = self.client.post("/api/profiles")
@@ -107,8 +107,8 @@ class NegativeApiTest(TestCase):
             "username":"pelevin",
             "password": "secret"
         })
-        token = response.json()["token"]
-        self.client.credentials(HTTP_AUTHORIZATION='JWT ' + token)
+        token = response.json()["access"]
+        self.client.credentials(HTTP_AUTHORIZATION='Bearer  ' + token)
 
     def test_reg_exist_user(self):
         response = self.client.post('/api/register', {
