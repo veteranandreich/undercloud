@@ -1,5 +1,6 @@
 from django.test import TestCase
 from accounts.models import User
+from profiles.models import Profile
 import json
 import requests
 
@@ -27,11 +28,21 @@ class ApiViewTest(TestCase):
         self.assertEqual("pelevin",str(User.objects.last()))
 
     def test_auth_api(self):
-        response = requests.post('http://127.0.0.1:8000/api/jwt-auth/', {
-            "username":"Pelevin",
-            "password": "qwerty"
+        self.client = APIClient()
+        response = self.client.post('/api/register', {
+            "username":"pelevin",
+            "email": "test_user1@example.com",
+            "password": "secret"
+        }, format="json")
+        u = User.objects.last()
+        u.is_active = True
+        u.save()
+        response = self.client.post('/api/jwt-auth/', {
+            "username":"pelevin",
+            "password": "secret"
         })
         self.assertTrue(response.json()["token"])
+
 class AuthApiViewTest(TestCase):
     def setUp(self):
         self.client = APIClient()
@@ -40,49 +51,33 @@ class AuthApiViewTest(TestCase):
             "email": "test_user1@example.com",
             "password": "secret"
         }, format="json")
-        response = requests.post('http://127.0.0.1:8000/api/jwt-auth/', {
-            "username":"admin",
-            "password": "admin"
+
+        user = User.objects.last()
+        user.is_active = True
+        user.save()
+        profile = Profile(owner = user)
+        profile.save()
+
+        response = self.client.post('/api/jwt-auth/', {
+            "username":"pelevin",
+            "password": "secret"
         })
         token = response.json()["token"]
         self.client.credentials(HTTP_AUTHORIZATION='JWT ' + token)
 
     def test_profile_post_api(self):
-        response = requests.post('http://127.0.0.1:8000/api/jwt-auth/', {
-            "username":"admin",
-            "password": "admin"
-        })
-        token = response.json()["token"]
-        value_header = 'JWT ' + token
-        response = requests.post("http://127.0.0.1:8000/api/profiles", headers={"Authorization":value_header})
+        response = self.client.post("/api/profiles")
         self.assertTrue(response.status_code == 200)
 
     def test_profile_get_api(self):
-        response = requests.post('http://127.0.0.1:8000/api/jwt-auth/', {
-            "username":"admin",
-            "password": "admin"
-        })
-        token = response.json()["token"]
-        value_header = 'JWT ' + token
-        response = requests.get("http://127.0.0.1:8000/api/profiles", headers={"Authorization":value_header})
+        response = self.client.get("/api/profiles")
         self.assertTrue(response.status_code == 200)
 
     def test_profile_HEAD_api(self):
-        response = requests.post('http://127.0.0.1:8000/api/jwt-auth/', {
-            "username":"admin",
-            "password": "admin"
-        })
-        token = response.json()["token"]
-        value_header = 'JWT ' + token
-        response = requests.head("http://127.0.0.1:8000/api/profiles", headers={"Authorization":value_header})
+        response = self.client.head("/api/profiles")
         self.assertTrue(response.status_code == 200)
 
     def test_profilepk_api(self):
-        response = requests.post('http://127.0.0.1:8000/api/jwt-auth/', {
-            "username":"admin",
-            "password": "admin"
-        })
-        token = response.json()["token"]
-        value_header = 'JWT ' + token
-        response = requests.get("http://127.0.0.1:8000/api/profiles/4", headers={"Authorization":value_header})
+        response = self.client.get("/api/profiles/11")
+        response.data
         self.assertTrue(response.status_code==200)
