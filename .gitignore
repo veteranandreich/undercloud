@@ -1,0 +1,6 @@
+config
+.idea
+__pycache__
+.pyc
+tracks
+photos

@@ -3,11 +3,15 @@ from accounts.models import User
 
 
 def user_directory_path_audio(instance, filename):
-    return 'tracks/user_{0}/{1}'.format(instance.owner.owner.pk, filename)
+    if Audio.objects.last():
+        name = Audio.objects.last().pk+1
+    else:
+        name = 0
+    return 'tracks/user_{0}/{1}'.format(instance.owner.owner.pk, name)
 
 
 def user_directory_path_photo(instance, filename):
-    return 'photos/user_{0}/{1}'.format(instance.owner.pk, filename)
+    return 'photos/user_{0}/{1}'.format(instance.owner.pk, instance.owner.pk)
 
 
 class Profile(models.Model):

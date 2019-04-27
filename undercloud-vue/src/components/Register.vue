@@ -1,7 +1,9 @@
 <template>
     <div>
         <p><input v-model="login" type="text" placeholder="Login"/></p>
+        <p v-if="usernamemessage"> <p v-for="er1 in usernamemessage"> {{er1}} </p> </p>
         <p><input v-model="email" type="email" placeholder="Email"></p>
+        <p v-if="emailmessage"> <p v-for="er2 in emailmessage"> {{er2}} </p> </p>
         <p><input v-model="password1" type="password" placeholder="Password"/></p>
         <p><input v-model="password2" type="password" placeholder="Confirm your password"/></p>
         <button @click="SignUp"> Sign Up </button>
@@ -9,8 +11,6 @@
         <router-link :to="{name: 'Login'}">
             Already have an account?
         </router-link>
-        <hr>
-        {{errormessage}}
     </div>
 </template>
 
@@ -25,7 +25,8 @@
                 email: '',
                 password1: '',
                 password2: '',
-                errormessage: ''
+                usernamemessage: '',
+                emailmessage: '',
             }
         },
         methods: {
@@ -49,7 +50,8 @@
                         },
                         error: (response) => {
                             console.log(response);
-                            this.errormessage = "Incorrect data, make sure all fields are filled"
+                            this.usernamemessage = response.responseJSON.username;
+                            this.emailmessage = response.responseJSON.email
                         }
                     })
                 }

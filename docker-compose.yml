@@ -8,6 +8,7 @@ services:
         volumes:
             - ./deploy/nginx:/etc/nginx/conf.d
             - ./static:/static
+            - ./src/media:/media
         depends_on:
             - web
     web:
@@ -20,6 +21,7 @@ services:
             - ./src:/src
             - ./deploy/uwsgi:/usr/local/etc/
             - ./static:/static
+            - ./src/media:/media
         expose:
             - "8000"
     db:

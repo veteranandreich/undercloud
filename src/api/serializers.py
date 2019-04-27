@@ -7,12 +7,6 @@ import random
 import string
 
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'email', 'date_of_registration', 'is_active')
-
-
 class CreateUserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
@@ -29,10 +23,9 @@ class CreateUserSerializer(serializers.ModelSerializer):
         token = self.generate_token()
         user.token = token
         user.save()
-        text = f"""Please confirm your registration via this link 127.0.0.1:8000/api/verify/?pk={user.pk}&token={token}. If you didn't sign up for our site just ignore this letter"""
+        text = f"""Please confirm your registration via this link \n 127.0.0.1:8000/api/verify/?pk={user.pk}&token={token}. \n If you didn't sign up for our Undercloud just ignore this letter"""
         send_mail('Undercloud verification', text, from_email=EMAIL_HOST_USER,
                   recipient_list=[user.email], fail_silently=True)
-
         return user
 
     class Meta:
@@ -40,36 +33,41 @@ class CreateUserSerializer(serializers.ModelSerializer):
         fields = ('username', 'email', 'password')
 
 
-class FollowersSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('pk', 'username')
+
+
+class ShortInfoProfileSerializer(serializers.ModelSerializer):
     owner = UserSerializer()
 
     class Meta:
         model = Profile
-        fields = ('owner',)
+        fields = ('owner', 'photo')
 
 
-class AudioSerializer(serializers.ModelSerializer):
+class PostAudioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Audio
         fields = ('title', 'track', 'publication_date')
 
 
+class AudioSerializer(serializers.ModelSerializer):
+    owner = ShortInfoProfileSerializer()
+
+    class Meta:
+        model = Audio
+        fields = ('owner', 'title', 'track', 'publication_date')
+
+
 class ProfileSerializer(serializers.ModelSerializer):
 
     owner = UserSerializer()
-    get_audio = AudioSerializer(many=True)
-    followers = FollowersSerializer(many=True)
-    following = FollowersSerializer(many=True)
+    get_audio = PostAudioSerializer(many=True)
+    followers = ShortInfoProfileSerializer(many=True)
+    following = ShortInfoProfileSerializer(many=True)
 
     class Meta:
         model = Profile
         fields = ('owner', 'photo', 'followers', 'following', 'get_audio', 'status', 'about')
-
-
-class FollowingSerializer(serializers.ModelSerializer):
-    owner = UserSerializer()
-    get_audio = AudioSerializer(many=True)
-
-    class Meta:
-        model = Profile
-        fields = ('owner', 'get_audio')

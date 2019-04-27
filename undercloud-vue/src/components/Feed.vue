@@ -17,7 +17,7 @@
         name: "Feed",
         data() {
             return {
-                profiles: ''
+                profiles: '',
             }
         },
         created() {
