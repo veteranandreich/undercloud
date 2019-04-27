@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fb3334d5-7aff-4e0c-96c1-ded1d90896cb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deploy/nginx/undercloud.conf" beforeDir="false" afterPath="$PROJECT_DIR$/deploy/nginx/undercloud.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/media/default.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/media/default.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/media/photos/user_3/cz1btvhqpm17-viktor-pelevin.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/media/tracks/user_2/a4bf65d79752.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/media/tracks/user_2/skid-row-18-and-life.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/media/tracks/user_3/Кино__Спокойная_ночь_OST_Сестры.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/media/tracks/user_8/skid-row-18-and-life.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/media/tracks/user_8/Кино__Спокойная_ночь_OST_Сестры.mp3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/profiles/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/profiles/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/undercloud-vue/src/components/Feed.vue" beforeDir="false" afterPath="$PROJECT_DIR$/undercloud-vue/src/components/Feed.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/undercloud-vue/src/components/Register.vue" beforeDir="false" afterPath="$PROJECT_DIR$/undercloud-vue/src/components/Register.vue" afterDir="false" />
-    </list>
+    <list default="true" id="fb3334d5-7aff-4e0c-96c1-ded1d90896cb" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -260,12 +244,12 @@
       <workItem from="1555865604204" duration="42000" />
       <workItem from="1556203965353" duration="16329000" />
       <workItem from="1556222468936" duration="1675000" />
-      <workItem from="1556368787815" duration="5630000" />
+      <workItem from="1556368787815" duration="6293000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56851000" />
+    <option name="totallyTimeSpent" value="57514000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="758" y="116" width="1047" height="774" extended-state="0" />
@@ -429,16 +413,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/profiles/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="30" column="77" selection-start-line="30" selection-start-column="77" selection-end-line="30" selection-end-column="77" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/docker-compose.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
@@ -472,6 +446,16 @@
           <caret line="72" column="93" selection-start-line="72" selection-start-column="93" selection-end-line="72" selection-end-column="93" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/profiles/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="30" column="77" selection-start-line="30" selection-start-column="77" selection-end-line="30" selection-end-column="77" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
