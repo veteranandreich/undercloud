@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.views import APIView
-from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
+from rest_framework.generics import get_object_or_404
 from profiles.models import Profile, Audio
 from .serializers import ProfileSerializer, CreateUserSerializer, PostAudioSerializer, AudioSerializer
 from accounts.models import User
@@ -16,7 +16,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
 
     def filter_queryset(self, queryset, *args, **kwargs):
-        queryset = Profile.objects.filter(owner=self.request.user)
+        queryset = queryset.filter(owner=self.request.user)
         return queryset
 
     def retrieve(self, request, pk=None, *args, **kwargs):
@@ -38,10 +38,31 @@ class ProfileViewSet(viewsets.ModelViewSet):
         return Response({"Error": "Profile already exist"})
 
     def destroy(self, request, pk=None, *args, **kwargs):
-        profile = get_object_or_404(Profile, pk=pk, owner=request.user)
+        profile = get_object_or_404(self.get_queryset(), owner__pk=pk)
         user = profile.owner
         user.delete()
         return Response({"Status": "Delete completed"})
+
+    def partial_update(self, request, pk=None, *args, **kwargs):
+        profile = get_object_or_404(self.filter_queryset(self.queryset), owner__pk=pk)
+        status = request.data.get("status", "Empty")
+        about = request.data.get("about", "Empty")
+        follow = request.data.get("follow", False)
+        unfollow = request.data.get("unfollow", False)
+        if status != "Empty":
+            profile.status = status
+        if about != "Empty":
+            profile.about = about
+        if follow and follow.isdigit() and follow != str(pk):
+            profile.following.add(Profile.objects.get(pk=follow))
+        if unfollow and unfollow.isdigit() and unfollow != str(pk):
+            profile.following.remove(Profile.objects.get(pk=unfollow))
+        profile.save()
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data)
+
+    def update(self, request, *args, **kwargs):
+        return Response({"detail": "Method \"PUT\" not allowed."})
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -71,4 +92,3 @@ class UploadAudio(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user.profile)
-
