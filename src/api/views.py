@@ -38,7 +38,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
         return Response({"Error": "Profile already exist"})
 
     def destroy(self, request, pk=None, *args, **kwargs):
-        profile = get_object_or_404(self.get_queryset(), owner__pk=pk)
+        profile = get_object_or_404(self.filter_queryset(self.queryset), owner__pk=pk)
         user = profile.owner
         user.delete()
         return Response({"Status": "Delete completed"})
